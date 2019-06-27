@@ -32,15 +32,15 @@ Ultrasonic ultrasonic4(Trig4, Echo4); // these - for y- axis
 public:
 
   void read_A (){
-    Adist = ultra_object1.distanceRead();
+    Adist = ultra_object1->distanceRead();
   }
 
   void read_B (){
-    Bdist = ultra_object2.distanceRead();
+    Bdist = ultra_object2->distanceRead();
   }
 
   
-  axis(Ultrasonic *ultra_object1, Ultrasonic *ultra_object2) {
+  axis(Ultrasonic &ultra_object1, Ultrasonic &ultra_object2) {
     read_A();
     read_B();
 
@@ -52,23 +52,39 @@ public:
 
  };
 
+struct double_result {
+  int result1;
+  int result2;
+
+  const double_result operator = (double_result my_result) {
+    result1 = my_result.result1;
+    result2 = my_result.result2;
+  }
+};
 
 const float Baseline = 100;                 // distance between the transducers (aka c - sight) (cm)
  
  // globals ***************************************
 
-void setup {
-  Serial.begin(9600);
+void setup () {
+  Serial.begin(9600);  
+  
+}
+
+void loop () {
 
   axis x (ultrasonic1, ultrasonic2);
   axis y (ultrasonic3, ultrasonic4);
   
   
+  double_result bias;
+  bias = find_diviation (x, y);
 }
 
-void loop {
-  
+double_result find_diviation (axis x, axis y){
+   double_result sumup;
+   sumup.result1 = x.check_axis_orientary();
+   sumup.result2 = y.check_axis_orientary();
+    return sumup;
 }
-
-
 
