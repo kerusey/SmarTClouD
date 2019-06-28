@@ -88,3 +88,10 @@ double_result find_diviation (axis x, axis y){
     return sumup;
 }
 
+ void coil_boost (int port, int delta){
+ 
+}
+
+ void coil_buck (int port, int delta){
+
+}
