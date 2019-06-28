@@ -34,11 +34,11 @@
 
  // 4 ultrasonic objects
  
-Ultrasonic ultrasonic1(Trig1, Echo1);
-Ultrasonic ultrasonic2(Trig2, Echo2); // these are for x - axis
+Ultrasonic ultrasonic1(Trig1, Echo1),
+           ultrasonic2(Trig2, Echo2), // these are for x - axis
 
-Ultrasonic ultrasonic3(Trig3, Echo3);
-Ultrasonic ultrasonic4(Trig4, Echo4); // these - for y- axis
+           ultrasonic3(Trig3, Echo3),
+           ultrasonic4(Trig4, Echo4); // these - for y- axis
 
 // resisto-coil class provide control coils via changing resistance of controllable resistor that been paralleled with the coil
 
