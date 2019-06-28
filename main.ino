@@ -14,6 +14,12 @@
 #define Trig4 10                       //sensor D "Trig" pin
 #define Echo4 11                       //sensor D "Echo" pin
 
+#define Contr1 12
+#define Contr2 13
+#define Contr3 14
+#define Contr4 15
+
+
  // 4 ultrasonic objects
  
 Ultrasonic ultrasonic1(Trig1, Echo1);
@@ -88,3 +94,10 @@ double_result find_diviation (axis x, axis y){
     return sumup;
 }
 
+ void buck_coil (int port, int delta){
+
+}
+
+ void boost_coil (int port, int delta){
+
+{
