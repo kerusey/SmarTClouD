@@ -2,23 +2,35 @@
 
  // globals ***************************************
 
-#define Trig1 4                       //sensor A "Trig" pin
-#define Echo1 5                       //sensor A "Echo" pin
+#define Trig1 1                       // sensor A "Trig" pin
+#define Echo1 2                       // sensor A "Echo" pin
 
-#define Trig2 6                       //sensor B "Trig" pin
-#define Echo2 7                       //sensor B "Echo" pin
+#define Trig2 3                       // sensor B "Trig" pin
+#define Echo2 4                       // sensor B "Echo" pin
 
-#define Trig3 8                       //sensor C "Trig" pin
-#define Echo3 9                       //sensor C "Echo" pin
+#define Trig3 5                       // sensor C "Trig" pin
+#define Echo3 6                       // sensor C "Echo" pin
 
-#define Trig4 10                       //sensor D "Trig" pin
-#define Echo4 11                       //sensor D "Echo" pin
+#define Trig4 7                      // sensor D "Trig" pin
+#define Echo4 8                      // sensor D "Echo" pin
 
-#define Contr1 12
-#define Contr2 13
-#define Contr3 14
-#define Contr4 15
+#define Up1 9
+#define Inc1 10
+#define Cs1 11
 
+#define Up2 12
+#define Inc2 13
+#define Cs2 14
+
+#define Up3 15
+#define Inc3 16
+#define Cs3 17
+
+#define Up4 18
+#define Inc4 19
+#define Cs4 20                      // inititializes 4 resisto_coil objects
+
+#define const_resistance 3000
 
  // 4 ultrasonic objects
  
@@ -27,6 +39,71 @@ Ultrasonic ultrasonic2(Trig2, Echo2); // these are for x - axis
 
 Ultrasonic ultrasonic3(Trig3, Echo3);
 Ultrasonic ultrasonic4(Trig4, Echo4); // these - for y- axis
+
+// resisto-coil class provide control coils via changing resistance of controllable resistor that been paralleled with the coil
+
+class resisto_coil {
+  
+  int ud;
+  int inc;
+  int cs;
+  int resistance;
+
+public:
+
+ resisto_coil (int my_ud, int my_inc, int my_cs) { // my_ input must be constant !!!
+  resistance = const_resistance;
+  ud = my_ud;
+  inc = my_inc;
+  cs = my_cs;
+ }
+
+ void boost_coil() {                   // 1step resistor boost
+  
+  digitalWrite(ud, HIGH);             //  U/D  goes up 1
+  digitalWrite(inc, HIGH);            //  INC too
+  digitalWrite(cs, LOW);              // turn on
+  
+  delayMicroseconds(1);               
+  
+  digitalWrite(inc, LOW);             
+  
+  delayMicroseconds(1);
+  
+  digitalWrite(inc, HIGH);
+  
+  delayMicroseconds(1);
+
+  digitalWrite(cs, HIGH);             // turn off and runs EEPROM 
+ }
+
+ void buck_coil() {                         // 1step buck resistor
+ 
+  digitalWrite(ud, LOW);        //  U/D  goes up 1
+  digitalWrite(inc, HIGH);        //  INC too
+  digitalWrite(cs, LOW);        // turn on
+ 
+  delayMicroseconds(1);
+ 
+  digitalWrite(inc, LOW);
+ 
+  delayMicroseconds(1);
+ 
+  digitalWrite(inc, HIGH);
+ 
+  delayMicroseconds(1);
+
+  digitalWrite(cs, HIGH);
+ }
+
+};
+
+// now creating a 4 megnetic coil objects, been controlled by variable resistor;
+ 
+ resisto_coil magnet_object1 (Up1, Inc1, Cs1),
+              magnet_object2 (Up2, Inc2, Cs2), // for X axis
+              magnet_object3 (Up3, Inc3, Cs3),
+              magnet_object4 (Up4, Inc4, Cs4); // for Y axis
 
  class axis { // triangle sights a & b ; c - const
 
@@ -94,10 +171,3 @@ double_result find_diviation (axis x, axis y){
     return sumup;
 }
 
- void buck_coil (int port, int delta){
-
-}
-
- void boost_coil (int port, int delta){
-
-{
