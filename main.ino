@@ -8,7 +8,7 @@ ultrasonic objects 3 and 4 used for Y axis (right) (left)
 
 !!!*/
 
-
+ // you may also need a high variable "h"
 
 
 
