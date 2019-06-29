@@ -51,7 +51,7 @@ ultrasonic objects 3 and 4 used for Y axis (right) (left)
 
 
 #define const_resistance 3000
-#define const_alpha 30
+#define const_alpha 30 		// variable (ultrasonic object's angle)
 
  // 4 ultrasonic objects
  
