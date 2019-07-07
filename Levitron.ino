@@ -1,11 +1,9 @@
-/*	!!! important stuff:
-
+#include "Ultrasonic.h"
+/*  !!! important stuff:
 magnet_objects 1 and 2 used for X axis (right) (left)
 magnet_objects 3 and 4 used for Y axis (right) (left)
-
 ultrasonic objects 1 and 2 used for X axis (right) (left)
 ultrasonic objects 3 and 4 used for Y axis (right) (left)
-
 !!!*/
 
  // you may also need a high variable "h"
@@ -47,11 +45,13 @@ ultrasonic objects 3 and 4 used for Y axis (right) (left)
 #define HallS1 21
 #define HallS2 22
 #define HallS3 23
-#define HallS4 24					// 4 hall sensor's ports
+#define HallS4 24         // 4 hall sensor's ports
 
 
-#define const_resistance 3000
-#define const_alpha 30 		// variable (ultrasonic object's angle)
+#define const_resistance 10.0           // variable default resistance of coils (better be over 10; best > const_delta_resistance * 10)
+#define const_alpha 30                  // variable (ultrasonic object's angle)
+#define const_delta_resistance 3.906  // variable, equals step of resistor (in example used AD8400, with a step 1000/256 Ohm/step) 
+
 
  // 4 ultrasonic objects
  
@@ -94,22 +94,29 @@ public:
 
  };
 
-struct double_result {
-  int result1;
-  int result2;
+class squad_container {  // used here to contain resistance before hall_check func change it
+  float squad_member1;
+  float squad_member2;
+  float squad_member3;
+  float squad_member4;
 
-  const double_result operator = (double_result my_result) {
-    result1 = my_result.result1;
-    result2 = my_result.result2;
-  }
+public:
+ 
+    void import_sq (float sm1, float sm2, float sm3, float sm4){
+      squad_member1 = sm1;
+      squad_member2 = sm2;
+      squad_member3 = sm3;
+      squad_member4 = sm4;
+    }
+
+    void export_sq (float *sm1, float *sm2, float *sm3, float *sm4){
+      *sm1 = squad_member1;
+      *sm2 = squad_member2;
+      *sm3 = squad_member3;
+      *sm4 = squad_member4;
+    }
 };
 
-double_result find_diviation (axis x, axis y){
-   double_result sumup;
-   sumup.result1 = x.check_axis_orientary();
-   sumup.result2 = y.check_axis_orientary();
-    return sumup;
-}
 
 const float Baseline = 100;                 // distance between the transducers (aka c - sight) (cm)
 
@@ -118,7 +125,7 @@ class resisto_coil {
   int ud;
   int inc;
   int cs;
-  int resistance;
+  float resistance;
 
 public:
 
@@ -129,50 +136,56 @@ public:
   cs = my_cs;
  }
 
-  	void boot () {
- 		pinMode(inc, OUTPUT);
-		pinMode(ud, OUTPUT);
-		pinMode(cs, OUTPUT);
-		digitalWrite(cs, HIGH);
- 	}
+  void boot () {
+    pinMode(inc, OUTPUT);
+    pinMode(ud, OUTPUT);
+    pinMode(cs, OUTPUT);
+    digitalWrite(cs, HIGH);
+  }
 
- void boost_coil() {                   // 1step resistor boost
-  
-  digitalWrite(ud, HIGH);             //  U/D  goes up 1
-  digitalWrite(inc, HIGH);            //  INC too
-  digitalWrite(cs, LOW);              // turn on
-  
-  delayMicroseconds(1);               
-  
-  digitalWrite(inc, LOW);             
-  
-  delayMicroseconds(1);
-  
-  digitalWrite(inc, HIGH);
-  
-  delayMicroseconds(1);
+  int coil_resistance () {return resistance;}
 
-  digitalWrite(cs, HIGH);             // turn off and runs EEPROM 
+  void boost_coil (size_t delta = 1) {                   // 1step resistor boost
+    for (size_t i = 0 ; i < delta ; ++i) {
+      digitalWrite(ud, HIGH);             //  U/D  goes up 1
+      digitalWrite(inc, HIGH);            //  INC too
+      digitalWrite(cs, LOW);              // turn on
+      
+      delayMicroseconds(1);               
+      
+      digitalWrite(inc, LOW);             
+      
+      delayMicroseconds(1);
+      
+      digitalWrite(inc, HIGH);
+      
+      delayMicroseconds(1);
+
+      digitalWrite(cs, HIGH);             // turn off and runs EEPROM
+      resistance += const_delta_resistance;                   
+    }
  }
 
- void buck_coil() {                         // 1step buck resistor
- 
-  digitalWrite(ud, LOW);        //  U/D  goes down 1
-  digitalWrite(inc, HIGH);      //  INC too
-  digitalWrite(cs, LOW);        // turn on
- 
-  delayMicroseconds(1);
- 
-  digitalWrite(inc, LOW);
- 
-  delayMicroseconds(1);
- 
-  digitalWrite(inc, HIGH);
- 
-  delayMicroseconds(1);
+  void buck_coil (size_t delta = 1) {                         // 1step buck resistor
+    for (size_t i = 0 ; i < delta ; ++i){
+      digitalWrite(ud, LOW);        //  U/D  goes down 1
+      digitalWrite(inc, HIGH);      //  INC too
+      digitalWrite(cs, LOW);        // turn on
+     
+      delayMicroseconds(1);
+     
+      digitalWrite(inc, LOW);
+     
+      delayMicroseconds(1);
+     
+      digitalWrite(inc, HIGH);
+     
+      delayMicroseconds(1);
 
-  digitalWrite(cs, HIGH);
- }
+      digitalWrite(cs, HIGH);
+      resistance -= const_delta_resistance;
+    }
+  }
 
 };
 
@@ -186,79 +199,104 @@ public:
  // globals ***************************************
 
 bool hall_check (){  
-	if (digitalRead(HallS1) == LOW || digitalRead(HallS2) == LOW || digitalRead(HallS3) == LOW || digitalRead(HallS4) == LOW) 
-		return true;
-	else return false;
+  if (digitalRead(HallS1) == LOW || digitalRead(HallS2) == LOW || digitalRead(HallS3) == LOW || digitalRead(HallS4) == LOW) 
+    return true;
+  else return false;
 } 
 
 
 void correction (axis &x, axis &y) { // this is the main function of control coils
- 	
- 	int Xdiviation = x.check_axis_orientary();
- 	int Ydiviation = y.check_axis_orientary();
+  
+  int Xdiviation = x.check_axis_orientary();
+  int Ydiviation = y.check_axis_orientary();
     
     while (true) {
-    	
-    	// check X axis deviation
+      
+      // check X axis deviation
+        if (!hall_check) {
+          while (Xdiviation > 0) {  // check deviation of right sight
+            magnet_object1.buck_coil();
+            magnet_object2.boost_coil();
+          }
 
-    		while (Xdiviation > 0) {  // check deviation of right sight
-    			magnet_object1.buck_coil();
-    			magnet_object2.boost_coil();
-    		}
+          while (Xdiviation < 0) {  // check deviation of left sight
+            magnet_object1.boost_coil();
+            magnet_object2.buck_coil();
+            }
 
-    		while (Xdiviation < 0) {  // check deviation of left sight
-    			magnet_object1.boost_coil();
-    			magnet_object2.buck_coil();
-    			}
+          while (Xdiviation == 0) {
+            Xdiviation = x.check_axis_orientary();
+            delay(100); // variable
+          }
 
-    		while (Xdiviation == 0) {
-    			Xdiviation = x.check_axis_orientary();
-    			delay(100); // variable
-    		}
+            // end of checking X axis
+      
+      // check Y axis deviation
+        
+          while (Ydiviation > 0) {  // check deviation of right sight
+            magnet_object3.buck_coil();
+            magnet_object4.boost_coil();
+          }
 
-    			// end of checking X axis
- 		
- 		// check Y axis deviation
-    	
-    		while (Ydiviation > 0) {  // check deviation of right sight
-    			magnet_object3.buck_coil();
-    			magnet_object4.boost_coil();
-    		}
+          while (Ydiviation < 0) {  // check deviation of left sight
+            magnet_object3.boost_coil();
+            magnet_object4.buck_coil(); 
+            }
 
-    		while (Ydiviation < 0) {  // check deviation of left sight
-    			magnet_object3.boost_coil();
-    			magnet_object4.buck_coil(); 
-    			}
+          while (Ydiviation == 0) { 
+            Ydiviation = y.check_axis_orientary();
+            delay(100); // variable
+          }
 
-    		while (Ydiviation == 0) { 
-    			Ydiviation = y.check_axis_orientary();
-    			delay(100); // variable
-    		}
+            // end of checking Y axis 
 
-    			// end of checking Y axis 
+          Xdiviation = x.check_axis_orientary();
+          Ydiviation = y.check_axis_orientary();
 
-    		Xdiviation = x.check_axis_orientary();
-    		Ydiviation = y.check_axis_orientary();
+          delay(100); // variable
+        }
+/* now we need to read hall sensor's input */
+      else { // if hall_check == true 
+          squad_container my_sq_container;
+          my_sq_container.import_sq (magnet_object1.coil_resistance(), magnet_object2.coil_resistance(), magnet_object3.coil_resistance(), magnet_object4.coil_resistance()); // import all resistance of each coil before they'll be changed
+ 
+          magnet_object1.buck_coil(int(magnet_object1.coil_resistance()));
+          magnet_object2.buck_coil(int(magnet_object2.coil_resistance()));
+          magnet_object3.buck_coil(int(magnet_object3.coil_resistance()));
+          magnet_object4.buck_coil(int(magnet_object4.coil_resistance()));
 
-    		delay(100); // variable
+        /** little summary. We have imported resistances to squad container*/
+          do
+            delay(3000);
+          while (hall_check); // now we've waited for as much time as user needs to take levitating object away from coils
+          // and we need to boot'em up again
 
-    			while (hall_check) delay(3000); // checks if construction fall
-    	}
+          my_sq_container.export_sq (magnet_object1.coil_resistance(), magnet_object2.coil_resistance(), magnet_object3.coil_resistance(), magnet_object4.coil_resistance());  // returns values of resistance of each coil back
+          
+          magnet_object1.boost_coil (int(magnet_object1.coil_resistance()));
+          magnet_object2.boost_coil (int(magnet_object2.coil_resistance()));
+          magnet_object3.boost_coil (int(magnet_object3.coil_resistance()));
+          magnet_object4.boost_coil (int(magnet_object4.coil_resistance()));
+          
+          // here we go back
 
- }
+        } // hall_check == true "exeption"
+      
+    } // while (true)
+ } // func 
 
 
 
 
 void setup () {
-	Serial.begin(9600);  
-	
-	// now we need to boot up the magnet objects:
+  Serial.begin(9600);  
+  
+  // now we need to boot up the magnet objects:
 
-	magnet_object1.boot();
-	magnet_object2.boot();
-	magnet_object3.boot();
-	magnet_object4.boot();
+  magnet_object1.boot();
+  magnet_object2.boot();
+  magnet_object3.boot();
+  magnet_object4.boot();
 
     pinMode(HallS1, INPUT);
     pinMode(HallS2, INPUT);
@@ -268,9 +306,8 @@ void setup () {
 }
 
 void loop () {
-	axis x (ultrasonic_object1, ultrasonic_object2),
-		 y (ultrasonic_object3, ultrasonic_object4);
+  axis x (ultrasonic_object1, ultrasonic_object2),
+     y (ultrasonic_object3, ultrasonic_object4);
 
-		 correction (x, y);
+     correction (x, y);
 }
-
