@@ -1,4 +1,3 @@
-#include "Ultrasonic.h"
 /*  !!! important stuff:
 magnet_objects 1 and 2 used for X axis (right) (left)
 magnet_objects 3 and 4 used for Y axis (right) (left)
@@ -7,8 +6,6 @@ ultrasonic objects 3 and 4 used for Y axis (right) (left)
 !!!*/
 
  // you may also need a high variable "h"
-
-
 
 #include "Ultrasonic.h"
 
