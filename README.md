@@ -26,7 +26,5 @@ maybe change const_alpha
 
 change default_resistance
 
-add multi-thread to x and y diviation
-
 
 GL
