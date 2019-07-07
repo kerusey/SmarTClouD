@@ -24,6 +24,9 @@
 #define Trig4 56                      // sensor D "Trig" pin
 #define Echo4 57                      // sensor D "Echo" pin
 
+#define TrigH 72 
+#define EchoH 73
+
 #define SDI_1 7
 #define CLK_1 8
 
@@ -62,8 +65,12 @@ Ultrasonic ultrasonic_object1 (Trig1, Echo1),
            ultrasonic_object2 (Trig2, Echo2), // these are for x - axis
 
            ultrasonic_object3 (Trig3, Echo3),
-           ultrasonic_object4 (Trig4, Echo4); // these - for y - axis
+           ultrasonic_object4 (Trig4, Echo4), // these - for y - axis
 
+           ultrasonic_object_height (TrigH, EchoH); // special object, that contains height between station and levitating object
+
+// size_t my_height () { return ultrasonic_object_height->distanceRead(); } // unbelliveble compile error
+           
 // resisto-coil class provide control coils via changing resistance of controllable resistor that been paralleled with the coil
 
 class axis { // triangle sights a & b ; c - const
