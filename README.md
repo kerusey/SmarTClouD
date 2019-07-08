@@ -18,10 +18,6 @@ I used the crealev company magnet levitation system patent to create the base of
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Technical shift: probably you'll need 
 
-1 more variable height that will contains the height of levitation moduel
-
-also you may need a func find_height (); 
-
 maybe change const_alpha 
 
 change default_resistance
