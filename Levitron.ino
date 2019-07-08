@@ -7,7 +7,7 @@
 
 // you may also need a high variable "height"
 #include "Ultrasonic.h"
-#include <SPI.h> // i dont know shall we use it or not (is there any protocols (not funcs and methods!), that this lib supports)
+//#include <SPI.h> // i dont know shall we use it or not (is there any protocols (not funcs and methods!), that this lib supports)
 
 // globals ***************************************
 // ports ***********************************************
@@ -207,14 +207,14 @@ bool hall_check () {
   else return false;
 }
 
-void solve_axis_diviation (axis &x, resisto_coil magnet_object1, resisto_coil magnet_object2) {
-  int diviation = x.check_axis_orientary();
-    if (diviation > 0) {  // check deviation of right sight
+void solve_axis_deviation (axis &x, resisto_coil magnet_object1, resisto_coil magnet_object2) {
+  int deviation = x.check_axis_orientary();
+    if (deviation > 0) {  // check deviation of right sight
       if (magnet_object1.coil_resistance() >= const_delta_resistance) magnet_object1.change_coil_resistance(-1); // buck
       if (magnet_object2.coil_resistance() < max_coil_resistance) magnet_object2.change_coil_resistance(1); // boost
     }
 
-    if (diviation < 0) {  // check deviation of left sight
+    if (deviation < 0) {  // check deviation of left sight
       if (magnet_object1.coil_resistance() >= const_delta_resistance) magnet_object1.change_coil_resistance(1); // boost
       if (magnet_object2.coil_resistance() < max_coil_resistance) magnet_object2.change_coil_resistance(-1); // buck
     }
@@ -226,8 +226,8 @@ void correction (axis &x, axis &y) { // this is the main function of control coi
   while (true) {
     // check X axis deviation
     if (!hall_check) { 
-      solve_axis_diviation (x, magnet_object1, magnet_object2);
-      solve_axis_diviation (y, magnet_object3, magnet_object4);
+      solve_axis_deviation (x, magnet_object1, magnet_object2);
+      solve_axis_deviation (y, magnet_object3, magnet_object4);
     }
     
     /* now we need to read hall sensor's input */
