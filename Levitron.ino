@@ -68,8 +68,6 @@ Ultrasonic ultrasonic_object1 (Trig1, Echo1),
            ultrasonic_object4 (Trig4, Echo4), // these - for y - axis
 
            ultrasonic_object_height (TrigH, EchoH); // special object, that contains height between station and levitating object
-
-// size_t my_height () { return ultrasonic_object_height->distanceRead(); } // unbelliveble compile error
            
 // resisto-coil class provide control coils via changing resistance of controllable resistor that been paralleled with the coil
 
@@ -206,6 +204,8 @@ bool hall_check () {
     return true;
   else return false;
 }
+
+size_t my_height () { return ultrasonic_object_height.distanceRead(); } 
 
 void solve_axis_deviation (axis &x, resisto_coil magnet_object1, resisto_coil magnet_object2) {
   int deviation = x.check_axis_orientary();
