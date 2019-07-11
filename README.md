@@ -16,10 +16,6 @@ The main idea of the project was the levitating cloud above some sort of platfor
 I used the crealev company magnet levitation system patent to create the base of project (platform), but whith my own coil-control system. 
  *link : https://www.crealev.com/levitation-modules
 
-/*
- hello
-*/
-
   
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
