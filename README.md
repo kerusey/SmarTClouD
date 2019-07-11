@@ -7,7 +7,9 @@ Project includes:
   - Source code of levitron
   - And README file, that i hope will help you to understand what's going on
   
-  A
+  !ACHTUNG! You better watch to the schemes if you wanna understand all case
+ Or skip this part and just download project. 
+
   
 This repository combines two different projects: the megneto levitating system and the colormusic for the cloud. 
 I’ve tride to make such cloud as Richard Clarkson’s studio produces. 
@@ -16,9 +18,7 @@ I’ve tride to make such cloud as Richard Clarkson’s studio produces.
 The main idea of the project was the levitating cloud above some sort of platform.
 I used the crealev company magnet levitation system patent to create the base of project (platform), but whith my own coil-control system. 
  *link : https://www.crealev.com/levitation-modules
-!ACHTUNG! You better watch to the schemes if you wanna understand all case
- Or skip this part and just download project. 
-
+ 
   
 Imho magnet-levitation project are divided into 3 cases:
 
