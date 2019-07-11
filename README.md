@@ -3,12 +3,11 @@
 Hey there! Here is my project called SmarTClouD. 
 
 Project includes:
-
-  Schemes of magneto-levitating system
+  - Schemes of magneto-levitating system
+  - Source code of levitron
+  - And README file, that i hope will help you to understand what's going on
   
-  Source code
   
-
 This repository combines two different projects: the megneto levitating system and the colormusic for the cloud. 
 I’ve tride to make such cloud as Richard Clarkson’s studio produces. 
  link : https://www.rclarkson.com/collections/clouds/products/floating-cloud
