@@ -235,10 +235,10 @@ void correction (axis &x, axis &y) { // this is the main function of control coi
       //      squad_container my_sq_container;
       //        my_sq_container.import_sq (magnet_object1.coil_resistance(), magnet_object2.coil_resistance(), magnet_object3.coil_resistance(), magnet_object4.coil_resistance()); // import all resistance of each coil before they'll be changed
 
-      magnet_object1.change_coil_resistance (-int(magnet_object1.coil_resistance()));
-      magnet_object2.change_coil_resistance (-int(magnet_object2.coil_resistance()));
-      magnet_object3.change_coil_resistance (-int(magnet_object3.coil_resistance()));
-      magnet_object4.change_coil_resistance (-int(magnet_object4.coil_resistance()));
+      magnet_object1.change_coil_resistance (-int(magnet_object1.coil_resistance () / const_delta_resistance));
+      magnet_object2.change_coil_resistance (-int(magnet_object2.coil_resistance () / const_delta_resistance));
+      magnet_object3.change_coil_resistance (-int(magnet_object3.coil_resistance () / const_delta_resistance));
+      magnet_object4.change_coil_resistance (-int(magnet_object4.coil_resistance () / const_delta_resistance));
 
       /** little summary. We have imported resistances to squad container*/
       do
