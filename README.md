@@ -7,9 +7,10 @@ Project includes:
   - Source code of levitron
   - And README file, that i hope will help you to understand what's going on
   
-  !ACHTUNG! You better watch to the schemes if you wanna understand all case
- Or skip this part and just download project. 
-
+ ## !ACHTUNG!
+  You better watch to the schemes if you wanna understand all case or skip this part and just download project. 
+  
+  ## Intro
   
 This repository combines two different projects: the megneto levitating system and the colormusic for the cloud. 
 I’ve tride to make such cloud as Richard Clarkson’s studio produces. 
@@ -27,6 +28,9 @@ First one is quite simple. The solenoid, that positioned above magnet, turns off
 Second type used to be composed from round permanent magnet and about 4 (or more) solenoid coils, which are equidistant from center of platform, also they have some sort of control stuff (as usual Hall sensor) right in center of platform.
 
 Third type used to be pretty much stronger than the second one. Also they have different control system of above-thing (levitating body); for example, Crealev uses magneto-optical control system, based on magnet Kerr effect and light polarization. Personally I used ultrasonic sensors to find out distance between sensor and the levitating body, then to figure out deviation of each axis (x and y) from “perfect” axis z (witch is positioned right in the middle of the levitating body and in the middle of the platform), I used differences between cos from each distance. After all manipulations, if deviation of axis is positive, that means that incline of levitating body is on the right side, so resistance of potentiometer that is paralleled to the coil of the right side is decreasing, at the same time, resistance of potentiometer that is paralleled to the coil of the left side of the axis that we are looking at, is increasing until deviation of the axis will be negative or equals 0 (all the opposite for the negative way and delay for zero).
+
+## Additional info
+ 
 
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
