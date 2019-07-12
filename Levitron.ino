@@ -51,6 +51,8 @@
 #define HallS_D3 74
 #define HallS_D4 75         // 4 hall sensor's ports
 
+#define Relay_D 76  		// Relay digital port
+
 // ports **********************************************
 
 #define const_resistance 10.0          // variable default resistance of coils (better be over 10; best > const_delta_resistance * 10)
@@ -231,31 +233,32 @@ void correction (axis &x, axis &y) { // this is the main function of control coi
     }
     
     /* now we need to read hall sensor's input */
-    else { // if hall_check == true
+    else  // if hall_check == true
+    digitalWrite (Relay_D, HIGH); // coil relay exeption 
       //      squad_container my_sq_container;
       //        my_sq_container.import_sq (magnet_object1.coil_resistance(), magnet_object2.coil_resistance(), magnet_object3.coil_resistance(), magnet_object4.coil_resistance()); // import all resistance of each coil before they'll be changed
-
+/*
       magnet_object1.change_coil_resistance (-int(magnet_object1.coil_resistance () / const_delta_resistance));
       magnet_object2.change_coil_resistance (-int(magnet_object2.coil_resistance () / const_delta_resistance));
       magnet_object3.change_coil_resistance (-int(magnet_object3.coil_resistance () / const_delta_resistance));
       magnet_object4.change_coil_resistance (-int(magnet_object4.coil_resistance () / const_delta_resistance));
-
+*/ 
       /** little summary. We have imported resistances to squad container*/
       do
         delay(3000);
       while (hall_check); // now we've waited for as much time as user needs to take levitating object away from coils
       // and we need to boot'em up again
-
+    digitalWrite (Relay_D, LOW);
       //          my_sq_container.export_sq (magnet_object1.coil_resistance(), magnet_object2.coil_resistance(), magnet_object3.coil_resistance(), magnet_object4.coil_resistance());  // returns values of resistance of each coil back
-
+/*
       magnet_object1.change_coil_resistance (const_resistance);
       magnet_object2.change_coil_resistance (const_resistance);
       magnet_object3.change_coil_resistance (const_resistance);
       magnet_object4.change_coil_resistance (const_resistance);  //! ALL THOSE COMMENTS ARE BECAUSE I WANTED TO CONTAIN VALUES OF EACH COIL RESISTANCE
-
+*/
       // here we go back
 
-    } // hall_check == true "exeption"
+    
 
   } // while (true)
 } // func
@@ -273,10 +276,22 @@ void setup () {
   magnet_object3.boot();
   magnet_object4.boot();
 
+  // booting magnet object obj
+
+  // setting Hall sensor
+
   pinMode(HallS_D1, INPUT);
   pinMode(HallS_D2, INPUT);
   pinMode(HallS_D3, INPUT);
   pinMode(HallS_D4, INPUT);
+
+  // setting Hall sensors
+
+  // setting Relay obj
+
+  digitalWrite (Relay_D, LOW);
+
+  // setting Relay obj
 
 }
 
