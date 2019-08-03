@@ -212,13 +212,13 @@ size_t my_height () { return ultrasonic_object_height.distanceRead(); }
 void solve_axis_deviation (axis &x, resisto_coil magnet_object1, resisto_coil magnet_object2) {
   int deviation = x.check_axis_orientary();
     if (deviation > 0) {  // check deviation of right sight
-      if (magnet_object1.coil_resistance() >= const_delta_resistance) magnet_object1.change_coil_resistance(-1); // buck
-      if (magnet_object2.coil_resistance() < max_coil_resistance) magnet_object2.change_coil_resistance(1); // boost
+      if (magnet_object1.coil_resistance() >= const_delta_resistance) magnet_object1.change_coil_resistance(1); // boost
+      if (magnet_object2.coil_resistance() < max_coil_resistance) magnet_object2.change_coil_resistance(-1); // buck
     }
 
     if (deviation < 0) {  // check deviation of left sight
-      if (magnet_object1.coil_resistance() >= const_delta_resistance) magnet_object1.change_coil_resistance(1); // boost
-      if (magnet_object2.coil_resistance() < max_coil_resistance) magnet_object2.change_coil_resistance(-1); // buck
+      if (magnet_object1.coil_resistance() >= const_delta_resistance) magnet_object1.change_coil_resistance(-1); // buck
+      if (magnet_object2.coil_resistance() < max_coil_resistance) magnet_object2.change_coil_resistance(1); // boost
     }
 }
 
