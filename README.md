@@ -30,7 +30,7 @@ First one is quite simple. The solenoid, that positioned above magnet, turns off
 ![Screenshot](schemes/example_of_upper2.gif)
 
 
-Next two types are similar in the global way: the levitation effect is achieved because of characteristic that any magnet has to push off from other magnets if they are turned to each other with similar pole. But the main disadvantage is quite strong instability of the all system (this is especially seen in the second levitron type). 
+Next two types are similar in the global way: the levitation effect is achieved because of characteristic that any magnet has to push off from other magnets if they are turned to each other with same pole. But the main disadvantage is quite strong instability of the all system (this is especially seen in the second levitron type). 
 In case of that we have to use some kind of magnets, that could pull the levitating body to the center of construction. Here is the main differences between 2nd and 3rd magnet levitation types: in case of the solenoid magnets are stronger than even neodymium ones, therefore the changes in solenoid coils produce much stronger difference for the all construction. In the second type we use permanent magnets around the platform to pull off levitating body and solenoid coils to pull it right to the center. 
 
 Second type used to be composed from permanent magnet and about 4 solenoid coils, which are equidistant from center of platform, also they have some sort of control stuff (as usual Hall sensor) right in center of platform.
