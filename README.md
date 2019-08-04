@@ -1,4 +1,3 @@
-                                 W O R K   S T I L L   I N   P R O C E S S . . .
 
 Hey there! Here is my project called SmarTClouD. 
 
