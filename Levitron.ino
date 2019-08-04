@@ -1,3 +1,7 @@
+/*///  THIS IS A MAIN FILE THAT USED TO BE A PROJECT NOW IT IS UPDATED 
+*****  TO THE Levitron FOLDER SO MAKE SHURE THAT YOU USE THE LAST VERSION
+*****  OF THIS PRODUCT
+///*/
 /*!!! important stuff:
   magnet_objects 1 and 2 used for X axis (right) (left)
   magnet_objects 3 and 4 used for Y axis (right) (left)
