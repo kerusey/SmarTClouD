@@ -7,7 +7,7 @@ Project includes:
   - And README file, that i hope will help you to understand what's going on
   
  ## !ACHTUNG!
-  You better watch to the schemes if you wanna understand all case or skip this part and just download project. 
+  You better watch to the schemes if you wanna understand all case or skip this part and just download project folder (Levitron). 
   
   ## Intro
   
