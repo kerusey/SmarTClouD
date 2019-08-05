@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Ultrasonic.h"
 
 #define const_alpha 30

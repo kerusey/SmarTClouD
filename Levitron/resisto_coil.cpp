@@ -58,4 +58,6 @@ void resisto_coil::change_coil_resistance (int res) {
   digitalWrite (cs, HIGH);
 }
 
+void resisto_coil::set_new_resistance(unsigned int _res) { change_coil_resistance(int((_res - resistance/const_delta_resistance))); }
+
 resisto_coil::~resisto_coil () {}
