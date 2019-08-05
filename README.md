@@ -4,7 +4,9 @@ Hey there! Here is my project called SmarTClouD.
 Project includes:
   - Schemes of magneto-levitating system
   - Source code of levitron
-  - And README file, that i hope will help you to understand what's going on
+  - README file, that i hope will help you to understand what's going on
+  - Proof of concept files
+ 
   
  ## !ACHTUNG!
   You better watch to the schemes if you wanna understand all case or skip this part and just download project folder (Levitron). 
