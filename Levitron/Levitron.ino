@@ -31,19 +31,6 @@
 #define TrigH 72 
 #define EchoH 73
 
-#define SDI_1 7
-#define CLK_1 8
-
-#define SDI_2 35
-#define CLK_2 36
-
-#define SDI_3 58
-#define CLK_3 59
-
-#define SDI_4 70
-#define CLK_4 71
-
-// #define CS 9                      // const ports for 4 resisto_coil objects
 /*
   #define HallS_A1 A15
   #define HallS_A2 A14
@@ -79,10 +66,10 @@ Ultrasonic ultrasonic_object1 (Trig1, Echo1),
 
 // now creating a 4 megnetic coil objects, been controlled by variable resistor;
 
-resisto_coil magnet_object1 (SDI_1, CLK_1),
-             magnet_object2 (SDI_2, CLK_2), // for X axis
-             magnet_object3 (SDI_3, CLK_3),
-             magnet_object4 (SDI_4, CLK_4); // for Y axis
+resisto_coil magnet_object1 (UD_1, INC_1),
+             magnet_object2 (UD_2, INC_2), // for X axis
+             magnet_object3 (UD_3, INC_3),
+             magnet_object4 (UD_4, INC_4); // for Y axis
 
 // globals ***************************************
 
@@ -128,13 +115,13 @@ size_t my_height () { return ultrasonic_object_height.read(); } // havent releas
 void solve_axis_deviation (axis &x, resisto_coil &_magnet_object1, resisto_coil &_magnet_object2) {
   double deviation = x.check_axis_orientary();
     if (deviation > 0) {  // check deviation of right sight
-      if (_magnet_object1.coil_resistance() >= const_delta_resistance) _magnet_object1.change_coil_resistance(1); // boost
-      if (_magnet_object2.coil_resistance() < max_coil_resistance) _magnet_object2.change_coil_resistance(-1); // buck
+      if (_magnet_object1.coil_resistance() >= const_delta_resistance) _magnet_object1.resisto_coil::boost(); // boost
+      if (_magnet_object2.coil_resistance() < max_coil_resistance) _magnet_object2.resisto_coil::buck(); // buck
     }
 
     if (deviation < 0) {  // check deviation of left sight
-      if (_magnet_object1.coil_resistance() >= const_delta_resistance) _magnet_object1.change_coil_resistance(-1); // buck
-      if (_magnet_object2.coil_resistance() < max_coil_resistance) _magnet_object2.change_coil_resistance(1); // boost
+      if (_magnet_object1.coil_resistance() >= const_delta_resistance) _magnet_object1.resisto_coil::buck(); // buck
+      if (_magnet_object2.coil_resistance() < max_coil_resistance) _magnet_object2.resisto_coil::boost();// boost
     }
 }
 

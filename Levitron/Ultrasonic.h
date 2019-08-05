@@ -27,7 +27,7 @@
  * Values of divisors
  */
 #define CM 28
-#define INC 71
+#define INCH 71
 
 class Ultrasonic {
   public:
