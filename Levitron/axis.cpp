@@ -9,11 +9,11 @@
 
 
 void axis::read_A () {
-  Adist = ultra_object1->distanceRead();
+  Adist = ultra_object1->read();
 }
 
 void axis::read_B () {
-  Bdist = ultra_object2->distanceRead();
+  Bdist = ultra_object2->read();
 }
 
 axis::axis(Ultrasonic &ultra_object1, Ultrasonic &ultra_object2) {

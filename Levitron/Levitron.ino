@@ -43,7 +43,7 @@
 #define SDI_4 70
 #define CLK_4 71
 
-#define CS 9                      // const ports for 4 resisto_coil objects
+// #define CS 9                      // const ports for 4 resisto_coil objects
 /*
   #define HallS_A1 A15
   #define HallS_A2 A14
@@ -61,7 +61,7 @@
 
 // #define const_resistance 10.0          // variable default resistance of coils (better be over 10; best > const_delta_resistance * 10) <- see resisto_coil.h
 // #define const_alpha 30                 // variable (ultrasonic object's angle) <- already written in files axis.h / axis.cpp 
-#define const_delta_resistance 3.906   // variable, equals step of resistor (in example used AD8400, with a step 1000/256 Ohm/step) 
+// #define const_delta_resistance 3.906   // variable, equals step of resistor (in example used AD8400, with a step 1000/256 Ohm/step) <- see resisto_coil.h file
 #define max_coil_resistance 20         // could be variable, depending on your coil resistance (const max_coil_resistance = 2*coil_resistance), shows maximal approved resistance for resistor (paralleled coil) 
 #define Baseline 100                   // distance between the transducers (aka c - sight) (cm)
 
@@ -92,10 +92,10 @@ void setup () {  // __init__ & set
 
   // now we need to boot up the magnet objects:
 
-  magnet_object1.boot();
-  magnet_object2.boot();
-  magnet_object3.boot();
-  magnet_object4.boot();
+  magnet_object1.resisto_coil::boot();
+  magnet_object2.resisto_coil::boot();
+  magnet_object3.resisto_coil::boot();
+  magnet_object4.resisto_coil::boot();
 
   // booting magnet object obj
 
@@ -123,18 +123,18 @@ bool hall_check () { // checks "Hall exeption"
   else return false;
 }
 
-size_t my_height () { return ultrasonic_object_height.distanceRead(); } // havent released yet (probably no need)
+size_t my_height () { return ultrasonic_object_height.read(); } // havent released yet (probably no need)
 
-void solve_axis_deviation (axis &x, resisto_coil magnet_object1, resisto_coil magnet_object2) {
+void solve_axis_deviation (axis &x, resisto_coil &_magnet_object1, resisto_coil &_magnet_object2) {
   double deviation = x.check_axis_orientary();
     if (deviation > 0) {  // check deviation of right sight
-      if (magnet_object1.coil_resistance() >= const_delta_resistance) magnet_object1.change_coil_resistance(1); // boost
-      if (magnet_object2.coil_resistance() < max_coil_resistance) magnet_object2.change_coil_resistance(-1); // buck
+      if (_magnet_object1.coil_resistance() >= const_delta_resistance) _magnet_object1.change_coil_resistance(1); // boost
+      if (_magnet_object2.coil_resistance() < max_coil_resistance) _magnet_object2.change_coil_resistance(-1); // buck
     }
 
     if (deviation < 0) {  // check deviation of left sight
-      if (magnet_object1.coil_resistance() >= const_delta_resistance) magnet_object1.change_coil_resistance(-1); // buck
-      if (magnet_object2.coil_resistance() < max_coil_resistance) magnet_object2.change_coil_resistance(1); // boost
+      if (_magnet_object1.coil_resistance() >= const_delta_resistance) _magnet_object1.change_coil_resistance(-1); // buck
+      if (_magnet_object2.coil_resistance() < max_coil_resistance) _magnet_object2.change_coil_resistance(1); // boost
     }
 }
 

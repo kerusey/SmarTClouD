@@ -1,3 +1,4 @@
+#pragma once
 
 class squad_container {  // used here to contain resistance before hall_check func change it (uleless in futuere)
 
