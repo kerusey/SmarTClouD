@@ -1,3 +1,5 @@
+// say hello, atom
+
 /*!!! important stuff:
   magnet_objects 1 and 2 used for X axis (right) (left)
   magnet_objects 3 and 4 used for Y axis (right) (left)
@@ -28,7 +30,7 @@
 #define Trig4 56                      // sensor D "Trig" pin
 #define Echo4 57                      // sensor D "Echo" pin
 
-#define TrigH 72 
+#define TrigH 72
 #define EchoH 73
 
 /*
@@ -47,9 +49,9 @@
 // ports **********************************************
 
 // #define const_resistance 10.0          // variable default resistance of coils (better be over 10; best > const_delta_resistance * 10) <- see resisto_coil.h
-// #define const_alpha 30                 // variable (ultrasonic object's angle) <- already written in files axis.h / axis.cpp 
+// #define const_alpha 30                 // variable (ultrasonic object's angle) <- already written in files axis.h / axis.cpp
 // #define const_delta_resistance 3.906   // variable, equals step of resistor (in example used AD8400, with a step 1000/256 Ohm/step) <- see resisto_coil.h file
-#define max_coil_resistance 20         // could be variable, depending on your coil resistance (const max_coil_resistance = 2*coil_resistance), shows maximal approved resistance for resistor (paralleled coil) 
+#define max_coil_resistance 20         // could be variable, depending on your coil resistance (const max_coil_resistance = 2*coil_resistance), shows maximal approved resistance for resistor (paralleled coil)
 #define Baseline 100                   // distance between the transducers (aka c - sight) (cm)
 
 // 4 ultrasonic objects
@@ -61,7 +63,7 @@ Ultrasonic ultrasonic_object1 (Trig1, Echo1),
            ultrasonic_object4 (Trig4, Echo4), // these - for y - axis
 
            ultrasonic_object_height (TrigH, EchoH); // special object, that contains height between station and levitating object
-           
+
 // resisto-coil class provide control coils via changing resistance of controllable resistor that been paralleled with the coil
 
 // now creating a 4 megnetic coil objects, been controlled by variable resistor;
@@ -104,7 +106,7 @@ void setup () {  // __init__ & set
 }
 
 
-bool hall_check () { // checks "Hall exeption" 
+bool hall_check () { // checks "Hall exeption"
   if (digitalRead(HallS_D1) == LOW || digitalRead(HallS_D2) == LOW || digitalRead(HallS_D3) == LOW || digitalRead(HallS_D4) == LOW)
     return true;
   else return false;
@@ -128,14 +130,14 @@ void solve_axis_deviation (axis &x, resisto_coil &_magnet_object1, resisto_coil 
 void correction (axis &x, axis &y) { // this is the main function of control coils
   while (true) {
     // check X axis deviation
-    if (!hall_check) { 
+    if (!hall_check) {
       solve_axis_deviation (x, magnet_object1, magnet_object2);
       solve_axis_deviation (y, magnet_object3, magnet_object4);
     }
-    
+
     /* now we need to read hall sensor's input */
     else  // if hall_check == true
-    digitalWrite (Relay_D, HIGH); // coil relay exeption 
+    digitalWrite (Relay_D, HIGH); // coil relay exeption
       //      squad_container my_sq_container;
       //        my_sq_container.import_sq (magnet_object1.coil_resistance(), magnet_object2.coil_resistance(), magnet_object3.coil_resistance(), magnet_object4.coil_resistance()); // import all resistance of each coil before they'll be changed
 /*
@@ -143,7 +145,7 @@ void correction (axis &x, axis &y) { // this is the main function of control coi
       magnet_object2.change_coil_resistance (-int(magnet_object2.coil_resistance () / const_delta_resistance));
       magnet_object3.change_coil_resistance (-int(magnet_object3.coil_resistance () / const_delta_resistance));
       magnet_object4.change_coil_resistance (-int(magnet_object4.coil_resistance () / const_delta_resistance));
-*/ 
+*/
       /** little summary. We have imported resistances to squad container*/
       do
         delay(3000);
@@ -163,9 +165,9 @@ void correction (axis &x, axis &y) { // this is the main function of control coi
   } // while (true)
 } // func
 
-void loop () { 
+void loop () {
   axis x (ultrasonic_object1, ultrasonic_object2),
        y (ultrasonic_object3, ultrasonic_object4);
 
   correction (x, y);
-} 
+}
