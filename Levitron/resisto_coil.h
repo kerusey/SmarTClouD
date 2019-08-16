@@ -1,22 +1,7 @@
 #pragma once
 
-#define const_resistance 202.0202
-#define const_delta_resistance 101.0101
-
-#define UD_1 7
-#define INC_1 8
-
-#define UD_2 35
-#define INC_2 36
-
-#define UD_3 58
-#define INC_3 59
-
-#define UD_4 70
-#define INC_4 71
-
-#define _CS 9   // CS port
-
+#define start_resistance 202.02
+#define const_delta_resistance 101.01
 
 class resisto_coil {
 
@@ -24,7 +9,7 @@ class resisto_coil {
   int INC;
   int CS;  // ports for resistor pci
 
-  float resistance;
+  double resistance;
 
 public:
 
@@ -32,7 +17,7 @@ public:
 
   void boot ();
 
-  double coil_resistance ();
+  double get_pot_resistance ();
 
   void change_coil_resistance (int res);
 
@@ -41,7 +26,7 @@ public:
   void boost (unsigned int _step = 1);
 
   void set_new_resistance(unsigned int _res);
-  
+
   ~resisto_coil ();
-  
+
 };
