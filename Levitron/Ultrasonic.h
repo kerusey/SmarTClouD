@@ -20,9 +20,6 @@
 
 #include <stdint.h>
 
-#ifndef Ultrasonic_h
-#define Ultrasonic_h
-
 /*
  * Values of divisors
  */
@@ -46,4 +43,4 @@ class Ultrasonic {
     unsigned int timing();
 };
 
-#endif // Ultrasonic_h
+// #endif // Ultrasonic_h

@@ -1,5 +1,3 @@
-// say hello, atom
-
 /*!!! important stuff:
   magnet_objects 1 and 2 used for X axis (right) (left)
   magnet_objects 3 and 4 used for Y axis (right) (left)
@@ -9,50 +7,20 @@
 
 // you may also need a high variable "height"
 
+#include "Ports.h"
 #include "Ultrasonic.h"
-// #include "squad_container.cpp"
+// #include "squad_container.h"
 #include "resisto_coil.h"
 #include "axis.h"
+#include "Protector.h"
 // #include <SPI.h> // i dont know shall we use it or not (is there any protocols (not funcs and methods!), that this lib supports)
 
 // globals ***************************************
-// ports ***********************************************
-
-#define Trig1 50                       // sensor A "Trig" pin
-#define Echo1 51                       // sensor A "Echo" pin
-
-#define Trig2 52                       // sensor B "Trig" pin
-#define Echo2 53                       // sensor B "Echo" pin
-
-#define Trig3 54                       // sensor C "Trig" pin
-#define Echo3 55                       // sensor C "Echo" pin
-
-#define Trig4 56                      // sensor D "Trig" pin
-#define Echo4 57                      // sensor D "Echo" pin
-
-#define TrigH 72
-#define EchoH 73
-
-/*
-  #define HallS_A1 A15
-  #define HallS_A2 A14
-  #define HallS_A3 A13
-  #define HallS_A4 A12        // they're not used in this program, but if you need you can uncomment them
-*/
-#define HallS_D1 72
-#define HallS_D2 73
-#define HallS_D3 74
-#define HallS_D4 75         // 4 hall sensor's ports
-
-#define Relay_D 76      // Relay digital port
-
-// ports **********************************************
-
 // #define const_resistance 10.0          // variable default resistance of coils (better be over 10; best > const_delta_resistance * 10) <- see resisto_coil.h
 // #define const_alpha 30                 // variable (ultrasonic object's angle) <- already written in files axis.h / axis.cpp
 // #define const_delta_resistance 3.906   // variable, equals step of resistor (in example used AD8400, with a step 1000/256 Ohm/step) <- see resisto_coil.h file
-#define max_coil_resistance 20         // could be variable, depending on your coil resistance (const max_coil_resistance = 2*coil_resistance), shows maximal approved resistance for resistor (paralleled coil)
-#define Baseline 100                   // distance between the transducers (aka c - sight) (cm)
+// #define max_coil_resistance 20         // could be variable, depending on your coil resistance (const max_coil_resistance = 2*coil_resistance), shows maximal approved resistance for resistor (paralleled coil)
+// #define Baseline 100                   // distance between the transducers (aka c - sight) (cm) (Actually not need)
 
 // 4 ultrasonic objects
 
@@ -60,19 +28,20 @@ Ultrasonic ultrasonic_object1 (Trig1, Echo1),
            ultrasonic_object2 (Trig2, Echo2), // these are for x - axis
 
            ultrasonic_object3 (Trig3, Echo3),
-           ultrasonic_object4 (Trig4, Echo4), // these - for y - axis
+           ultrasonic_object4 (Trig4, Echo4); // these - for y - axis
 
-           ultrasonic_object_height (TrigH, EchoH); // special object, that contains height between station and levitating object
+//         ultrasonic_object_height (TrigH, EchoH); // special object, that contains height between station and levitating object (not used in this project) 
 
 // resisto-coil class provide control coils via changing resistance of controllable resistor that been paralleled with the coil
 
-// now creating a 4 megnetic coil objects, been controlled by variable resistor;
-
 resisto_coil magnet_object1 (UD_1, INC_1),
              magnet_object2 (UD_2, INC_2), // for X axis
+                           
              magnet_object3 (UD_3, INC_3),
              magnet_object4 (UD_4, INC_4); // for Y axis
 
+// now creating a 4 megnetic coil objects, been controlled by variable resistor;
+    
 // globals ***************************************
 
 
@@ -112,30 +81,30 @@ bool hall_check () { // checks "Hall exeption"
   else return false;
 }
 
-size_t my_height () { return ultrasonic_object_height.read(); } // havent released yet (probably no need)
+// size_t my_height () { return ultrasonic_object_height.read(); } // havent released yet (probably no need)
 
 void solve_axis_deviation (axis &x, resisto_coil &_magnet_object1, resisto_coil &_magnet_object2) {
   double deviation = x.check_axis_orientary();
     if (deviation > 0) {  // check deviation of right sight
-      if (_magnet_object1.coil_resistance() >= const_delta_resistance) _magnet_object1.resisto_coil::boost(); // boost
-      if (_magnet_object2.coil_resistance() < max_coil_resistance) _magnet_object2.resisto_coil::buck(); // buck
+      if (_magnet_object1.get_pot_resistance() >= const_delta_resistance) _magnet_object1.resisto_coil::boost(); // boost
+      if (_magnet_object2.get_pot_resistance() < potentiometer_resistance) _magnet_object2.resisto_coil::buck(); // buck
     }
 
     if (deviation < 0) {  // check deviation of left sight
-      if (_magnet_object1.coil_resistance() >= const_delta_resistance) _magnet_object1.resisto_coil::buck(); // buck
-      if (_magnet_object2.coil_resistance() < max_coil_resistance) _magnet_object2.resisto_coil::boost();// boost
+      if (_magnet_object1.get_pot_resistance() >= const_delta_resistance) _magnet_object1.resisto_coil::buck(); // buck
+      if (_magnet_object2.get_pot_resistance() < potentiometer_resistance) _magnet_object2.resisto_coil::boost();// boost
     }
 }
 
 void correction (axis &x, axis &y) { // this is the main function of control coils
   while (true) {
     // check X axis deviation
-    if (!hall_check) {
+    if (!hall_check () ||  global_protect (magnet_object1, magnet_object2, magnet_object3,  magnet_object4)) {
       solve_axis_deviation (x, magnet_object1, magnet_object2);
       solve_axis_deviation (y, magnet_object3, magnet_object4);
     }
 
-    /* now we need to read hall sensor's input */
+    /* now we need to read hall sensor's input /
     else  // if hall_check == true
     digitalWrite (Relay_D, HIGH); // coil relay exeption
       //      squad_container my_sq_container;
@@ -146,10 +115,10 @@ void correction (axis &x, axis &y) { // this is the main function of control coi
       magnet_object3.change_coil_resistance (-int(magnet_object3.coil_resistance () / const_delta_resistance));
       magnet_object4.change_coil_resistance (-int(magnet_object4.coil_resistance () / const_delta_resistance));
 */
-      /** little summary. We have imported resistances to squad container*/
+      /** little summary. We have imported resistances to squad container */
       do
         delay(3000);
-      while (hall_check); // now we've waited for as much time as user needs to take levitating object away from coils
+      while (hall_check() || global_protect (magnet_object1, magnet_object2, magnet_object3,  magnet_object4)); // now we've waited for as much time as user needs to take levitating object away from coils
       // and we need to boot'em up again
     digitalWrite (Relay_D, LOW);
       //          my_sq_container.export_sq (magnet_object1.coil_resistance(), magnet_object2.coil_resistance(), magnet_object3.coil_resistance(), magnet_object4.coil_resistance());  // returns values of resistance of each coil back
@@ -157,10 +126,8 @@ void correction (axis &x, axis &y) { // this is the main function of control coi
       magnet_object1.change_coil_resistance (const_resistance);
       magnet_object2.change_coil_resistance (const_resistance);
       magnet_object3.change_coil_resistance (const_resistance);
-      magnet_object4.change_coil_resistance (const_resistance);  //! ALL THOSE COMMENTS ARE BECAUSE I WANTED TO CONTAIN VALUES OF EACH COIL RESISTANCE
+      magnet_object4.change_coil_resistance (const_resistance);  //! ALL THOSE COMMENTS ARE BECAUSE I WANTED TO CONTAIN VALUES OF EACH POTENTIOMETER RESISTANCE (NOT NESSESARY AT ALL)
 */
-      // here we go back
-
 
   } // while (true)
 } // func
