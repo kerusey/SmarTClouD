@@ -2,17 +2,17 @@
 
 // ports ***********************************************
 
-#define Trig1 50                       // sensor A "Trig" pin
-#define Echo1 51                       // sensor A "Echo" pin
+#define Trig1 45                       // sensor A "Trig" pin
+#define Echo1 46                       // sensor A "Echo" pin
 
-#define Trig2 52                       // sensor B "Trig" pin
-#define Echo2 53                       // sensor B "Echo" pin
+#define Trig2 47                       // sensor B "Trig" pin
+#define Echo2 48                       // sensor B "Echo" pin
 
-#define Trig3 48                       // sensor C "Trig" pin
-#define Echo3 49                       // sensor C "Echo" pin
+#define Trig3 43                       // sensor C "Trig" pin
+#define Echo3 44                       // sensor C "Echo" pin
 
-#define Trig4 46                      // sensor D "Trig" pin
-#define Echo4 47                      // sensor D "Echo" pin
+#define Trig4 42                      // sensor D "Trig" pin
+#define Echo4 41                      // sensor D "Echo" pin
 
 /*
   #define TrigH 72
@@ -31,20 +31,23 @@
 #define HallS_D3 24
 #define HallS_D4 25         // 4 hall sensor's ports
 
-#define UD_1 7
-#define INC_1 8
+#define UD_1 29
+#define INC_1 28
+#define CS_1 30
 
-#define UD_2 35
-#define INC_2 36
+#define UD_2 31
+#define INC_2 32
+#define CS_2 33
 
-#define UD_3 58
-#define INC_3 59
+#define UD_3 36
+#define INC_3 35
+#define CS_3 34
 
-#define UD_4 70
-#define INC_4 71            // digital potentiometers ports
+#define UD_4 39
+#define INC_4 38           // digital potentiometers ports
+#define CS_4 37
 
-#define CONST_CS 9   // CS port (it is available for any potentiometers)
 
-#define Relay_D 76      // Relay digital port
+#define Relay_D 40      // Relay digital port
 
 // ports **********************************************
