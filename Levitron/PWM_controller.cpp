@@ -1,11 +1,11 @@
 #include "PWM_controller.h"
 
 unsigned int convert_byte_to_percent () {
-  
+  return int(byte/255*100);
 }
 
 int convert_percent_to_byte () {
-
+  return int(percent*100/255);
 }
 
 void set_voltage (double _current_voltage = default_voltage, unsigned int _current_percent = NULL, int _current_byte = NULL);
