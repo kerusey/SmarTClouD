@@ -1,5 +1,6 @@
 #define default_voltage 3.3 // volts 
 #define const_delta_voltage 0.1 // step
+#define default_step 127
 
 class pwm_coil {
 
