@@ -50,4 +50,7 @@
 
 #define Relay_D 40      // Relay digital port
 
+#define PWM_controller1 /**/
+#define PWM_controller2 /**/
+
 // ports **********************************************
