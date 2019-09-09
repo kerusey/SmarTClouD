@@ -13,9 +13,13 @@ class pwm_coil {
   byte convert_percent_to_byte ();
 
 public:
-  void set_analog (double _current_voltage = default_voltage, unsigned int _current_percent = NULL, int _current_byte = NULL);
+
+  void set_analog (byte _current_byte);
+
   void buck (double _const_delta_voltage = const_delta_voltage);
+
   void boost (double _const_delta_voltage = const_delta_voltage);
+
   pwm_coil ();
 
   ~pwm_coil ();
