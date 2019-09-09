@@ -13,7 +13,7 @@
 // #include "resisto_coil.h"
 #include "axis.h"
 #include "Protector.h"
-#include “PWM_module”
+#include “PWM_controller.h”
 // #include <SPI.h> // i dont know shall we use it or not (is there any protocols (not funcs and methods!), that this lib supports)
 
 // globals ***************************************
