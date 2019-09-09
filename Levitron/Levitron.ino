@@ -78,7 +78,7 @@ void setup () {  // __init__ & set
 bool hall_check () { // checks "Hall exeption"
   if (digitalRead(HallS_D1) == LOW || digitalRead(HallS_D2) == LOW || digitalRead(HallS_D3) == LOW || digitalRead(HallS_D4) == LOW)
     return true;
-  else return false;
+  return false;
 }
 
 // size_t my_height () { return ultrasonic_object_height.read(); } // havent released yet (probably no need)
