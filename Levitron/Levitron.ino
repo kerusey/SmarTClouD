@@ -35,11 +35,11 @@ Ultrasonic ultrasonic_object1 (Trig1, Echo1),
 
 // resisto-coil class provide control coils via changing resistance of controllable resistor that been paralleled with the coil
 
-resisto_coil magnet_object1 (UD_1, INC_1),
-             magnet_object2 (UD_2, INC_2), // for X axis
+pwm_coil magnet_object1 (PWM_pin1),
+         magnet_object2 (PWM_pin2), // for X axis
                            
-             magnet_object3 (UD_3, INC_3),
-             magnet_object4 (UD_4, INC_4); // for Y axis
+         magnet_object3 (PWM_pin3),
+         magnet_object4 (PWM_pin4); // for Y axis
 
 // now creating a 4 megnetic coil objects, been controlled by variable resistor;
     
@@ -48,15 +48,6 @@ resisto_coil magnet_object1 (UD_1, INC_1),
 
 void setup () {  // __init__ & set
   Serial.begin(9600);
-
-  // now we need to boot up the magnet objects:
-
-  magnet_object1.resisto_coil::boot();
-  magnet_object2.resisto_coil::boot();
-  magnet_object3.resisto_coil::boot();
-  magnet_object4.resisto_coil::boot();
-
-  // booting magnet object obj
 
   // setting Hall sensor
 
@@ -84,16 +75,16 @@ bool hall_check () { // checks "Hall exeption"
 
 // size_t my_height () { return ultrasonic_object_height.read(); } // havent released yet (probably no need)
 
-void solve_axis_deviation (axis &x, resisto_coil &_magnet_object1, resisto_coil &_magnet_object2) {
+void solve_axis_deviation (axis &x, pwm_coil &_magnet_object1, pwm_coil &_magnet_object2) {
   double deviation = x.check_axis_orientary();
     if (deviation > 0) {  // check deviation of right sight
-      if (_magnet_object1.get_pot_resistance() >= const_delta_resistance) _magnet_object1.resisto_coil::boost(); // boost
-      if (_magnet_object2.get_pot_resistance() < potentiometer_resistance) _magnet_object2.resisto_coil::buck(); // buck
+      if (_magnet_object1.get_percent() >= 99) _magnet_object1.boost(); // boost
+      if (_magnet_object2.get_percent() < 1) _magnet_object2.buck(); // buck
     }
 
     if (deviation < 0) {  // check deviation of left sight
-      if (_magnet_object1.get_pot_resistance() >= const_delta_resistance) _magnet_object1.resisto_coil::buck(); // buck
-      if (_magnet_object2.get_pot_resistance() < potentiometer_resistance) _magnet_object2.resisto_coil::boost();// boost
+      if (_magnet_object1.get_percent() >= 99) _magnet_object1.buck(); // buck
+      if (_magnet_object2.get_percent() < 1) _magnet_object2.boost();// boost
     }
 }
 
