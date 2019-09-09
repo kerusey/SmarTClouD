@@ -1,13 +1,11 @@
-#define default_voltage 3.3 // volts 
-#define const_delta_voltage 0.1 // step
-#define default_step 127
+#define default_analog 127
 
 class pwm_coil {
 
   byte power_byte;
   double current_voltage;
   byte power_percent;
-  byte PWM_pin;
+  byte pwm_pin;
 
   byte convert_byte_to_percent ();
   byte convert_percent_to_byte ();
@@ -16,9 +14,9 @@ public:
 
   void set_analog (byte _current_byte);
 
-  void buck (double _const_delta_voltage = const_delta_voltage);
+  void buck (byte steps);
 
-  void boost (double _const_delta_voltage = const_delta_voltage);
+  void boost (byte steps);
 
   pwm_coil ();
 
