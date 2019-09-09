@@ -1,31 +1,48 @@
 #include "PWM_controller.h"
 
 unsigned int convert_byte_to_percent () {
-  return int(byte/255*100);
+  return int(analog_power/255*100);
 }
 
 int convert_percent_to_byte () {
-  return int(percent*100/255);
+  return int(percent_power*100/255);
 }
 
-void set_voltage (double _current_voltage = default_voltage, unsigned int _current_percent = NULL, int _current_byte = NULL) {
+void set_analog (byte _analog_power) {
+
+  analog_power = _analog_power;
+  percent_power = convert_analog_to_percent(_analog_power);
+  current_voltage = percent/20;
+  analogWrite(pwm_pin, analog_power);
   
 }
 
-void buck (double _const_delta_voltage = const_delta_voltage) {
-
+byte get_percent () { 
+  return percent_power;
 }
 
-void boost (double _const_delta_voltage = const_delta_voltage) {
-  byte—-;
-  analogWrite(module_pin
+byte get_analog () {
+  return analog_power;
 }
 
-pwm_coil (unsigned int _set_pin) {
-  analogWrite(_set_pin, default_step);
-  module_pin = _set_pin;
-  power_byte = default_step;
-  power_percent = convert_byte_to_percent(power_byte);
+void set_percent (byte _percent_power) {
+  percent_power = _percent_power(
+  analog_power = convert_analog_to_percent();
+  current_voltage = power_percent / 20;
+  analogWrite(pwm_pin, analog_power);
+}
+
+void buck (byte steps = 1) {
+  set_percent(get_percent() - steps);
+}
+
+void boost (byte steps = 1) {
+  set_percent (get_percent() + steps);
+}
+
+pwm_coil (byte _set_pin) {
+  pwm_pin = _set_pin;
+  set_analog(default_analog);
 }
 
 ~pwm_coil () {}
