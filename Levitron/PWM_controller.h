@@ -4,15 +4,16 @@
 
 class pwm_coil {
 
-  int power_byte;
+  byte power_byte;
   double current_voltage;
-  unsigned int power_percent;
+  byte power_percent;
+  byte PWM_pin;
 
-  unsigned int convert_byte_to_percent ();
-  int convert_percent_to_byte ();
+  byte convert_byte_to_percent ();
+  byte convert_percent_to_byte ();
 
 public:
-  void set_voltage (double _current_voltage = default_voltage, unsigned int _current_percent = NULL, int _current_byte = NULL);
+  void set_analog (double _current_voltage = default_voltage, unsigned int _current_percent = NULL, int _current_byte = NULL);
   void buck (double _const_delta_voltage = const_delta_voltage);
   void boost (double _const_delta_voltage = const_delta_voltage);
   pwm_coil ();
