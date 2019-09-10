@@ -1,6 +1,7 @@
-# New Patch is comming soon
+# KerPatch-5 complite is coming in a few days
 
 This repository contains 2 different ways of change coul magnet force: 
+
 - KerPatch-4 is the latest update for potentiometers
 - New patch coming soon. Changing voltage on coils via PWM controller. 
 
