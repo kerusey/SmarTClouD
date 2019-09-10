@@ -13,7 +13,7 @@ class resisto_coil {
 
 public:
 
-  resisto_coil (int _UD, int _INC); // my_ input must be constant !!!
+  resisto_coil (int _UD, int _INC, int _CS); // my_ input must be constant !!!
 
   void boot ();
 

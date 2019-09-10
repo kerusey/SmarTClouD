@@ -8,12 +8,12 @@
   #include <WProgram.h>
 #endif
 
-resisto_coil::resisto_coil (int _UD, int _INC) { // _input must be constant !!!
+resisto_coil::resisto_coil (int _UD, int _INC, int _CS) { // _input must be constant !!!
   
   resistance = start_resistance;
   UD = _UD;
   INC = _INC;
-  CS = CONST_CS;
+  CS = _CS;
 
 }
 

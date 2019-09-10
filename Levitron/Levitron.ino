@@ -13,8 +13,9 @@
 // #include "resisto_coil.h"
 #include "axis.h"
 #include "Protector.h"
-#include “PWM_controller.h”
-// #include <SPI.h> // i dont know shall we use it or not (is there any protocols (not funcs and methods!), that this lib supports)
+#include "PWM_controller.h"
+
+// #include <SPI.h> // no idea bout using this lib (is there any protocols (not funcs and methods!), that this lib supports)
 
 // globals ***************************************
 // #define const_resistance 10.0          // variable default resistance of coils (better be over 10; best > const_delta_resistance * 10) <- see resisto_coil.h
@@ -78,13 +79,13 @@ bool hall_check () { // checks "Hall exeption"
 void solve_axis_deviation (axis &x, pwm_coil &_magnet_object1, pwm_coil &_magnet_object2) {
   double deviation = x.check_axis_orientary();
     if (deviation > 0) {  // check deviation of right sight
-      if (_magnet_object1.get_percent() >= 99) _magnet_object1.boost(); // boost
-      if (_magnet_object2.get_percent() < 1) _magnet_object2.buck(); // buck
+      if (_magnet_object1.get_percent() < 100) _magnet_object1.boost(); // boost
+      if (_magnet_object2.get_percent() >= 1) _magnet_object2.buck(); // buck
     }
 
     if (deviation < 0) {  // check deviation of left sight
-      if (_magnet_object1.get_percent() >= 99) _magnet_object1.buck(); // buck
-      if (_magnet_object2.get_percent() < 1) _magnet_object2.boost();// boost
+      if (_magnet_object1.get_percent() >= 1) _magnet_object1.buck(); // buck
+      if (_magnet_object2.get_percent() < 100) _magnet_object2.pwm_coil::boost(); // boost
     }
 }
 
@@ -96,7 +97,7 @@ void correction (axis &x, axis &y) { // this is the main function of control coi
       solve_axis_deviation (y, magnet_object3, magnet_object4);
     }
 
-    /* now we need to read hall sensor's input /
+    /* now we need to read hall sensor's input */
     else  // if hall_check == true
     digitalWrite (Relay_D, HIGH); // coil relay exeption
       //      squad_container my_sq_container;
@@ -129,4 +130,4 @@ void loop () {
        y (ultrasonic_object3, ultrasonic_object4);
 
   correction (x, y);
-}
+} 
