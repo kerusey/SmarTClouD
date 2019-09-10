@@ -1,3 +1,5 @@
+——————Work still in progress———-
+
 # KerPatch-5 complite is coming in a few days
 
 This repository contains 2 different ways of change coul magnet force: 
@@ -85,6 +87,8 @@ On the last main scheme you may see the all picture of connection and communicat
 
 ![Screenshot](schemes/main_scheme.jpg)
  
+#Description of the KerPatch-5 bout PwM controller will be upload here 
+
 
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
