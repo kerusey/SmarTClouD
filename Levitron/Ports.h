@@ -30,7 +30,7 @@
 #define HallS_D2 23
 #define HallS_D3 24
 #define HallS_D4 25         // 4 hall sensor's ports
-
+/*
 #define UD_1 29
 #define INC_1 28
 #define CS_1 30
@@ -46,8 +46,14 @@
 #define UD_4 39
 #define INC_4 38           // digital potentiometers ports
 #define CS_4 37
+*/
 
 
 #define Relay_D 40      // Relay digital port
+
+#define PWM_pin1 1 /*FIXME*/
+#define PWM_pin2 2 /*FIXME*/
+#define PWM_pin3 3 /*FIXME*/
+#define PWM_pin4 4 /*FIXME*/
 
 // ports **********************************************
