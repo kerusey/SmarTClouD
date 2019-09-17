@@ -51,9 +51,9 @@
 
 #define Relay_D 40      // Relay digital port
 
-#define PWM_pin1 /**/
-#define PWM_pin2 /**/
-#define PWM_pin3 /**/
-#define PWM_pin4 /**/
+#define PWM_pin1 1 /*FIXME*/
+#define PWM_pin2 2 /*FIXME*/
+#define PWM_pin3 3 /*FIXME*/
+#define PWM_pin4 4 /*FIXME*/
 
 // ports **********************************************

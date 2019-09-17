@@ -12,6 +12,6 @@ bool global_protect (resisto_coil &pot1, resisto_coil &pot2, resisto_coil &pot3,
    return (local_protect (pot1) + local_protect (pot2) + local_protect (pot3) + local_protect (pot4));
 } */ // KerPatch-4 and lower
 
-bool global_protect (pwm_coil &magnet_object1, pwm_coil &magnet_object2, pwm_coil &magnet_object3, pwm_coil &magnet_object4) {
+bool global_protect (pwm::coil &magnet_object1, pwm::coil &magnet_object2, pwm::coil &magnet_object3, pwm::coil &magnet_object4) {
   return magnet_object1.get_voltage()/coil_resistance + magnet_object2.get_voltage()/coil_resistance + magnet_object3.get_voltage()/coil_resistance + magnet_object4.get_voltage()/coil_resistance > max_total_amp;
 } // KerPatch-5 
