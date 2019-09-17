@@ -1,9 +1,9 @@
 
-
+# New Ker-Patch-5 is now available
 This repository contains 2 different ways of change coul magnet force: 
 
-- KerPatch-4 is the latest update for potentiometers
-- KerPatch-5 coming soon. Changing voltage on coils via PWM controller. 
+- KerPatch-4. Latest update for potentiometer way of changing coil magnet force.
+- KerPatch-5. Changing voltage on coils via PWM controller. 
 
 Hey there! Here is my project called SmarTClouD. 
 
