@@ -2,7 +2,9 @@
 
 #include "Ultrasonic.h"
 
-#define const_alpha 30
+#define const_alpha 45
+#define baseline 30  // (CM)
+#define magnet_body_lenght 10  // (CM)
 
 class axis { // triangle sights a & b ; c - const
   protected:
