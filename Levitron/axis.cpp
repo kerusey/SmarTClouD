@@ -26,4 +26,9 @@ double axis::check_axis_orientary () { // returns the axis inclination (from the
   return (Adist * cos(const_alpha) - Bdist * cos(const_alpha));
 }
 
+void axis::get_status() {
+ if (!status.critical() || (
+
+}
+
 axis::~axis () {}
