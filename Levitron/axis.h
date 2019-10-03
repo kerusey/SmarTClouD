@@ -12,6 +12,7 @@ class axis { // triangle sights a & b ; c - const
 
     int Adist;
     int Bdist;
+    int height;
     Ultrasonic *ultra_object1;
     Ultrasonic *ultra_object2;
 
@@ -20,6 +21,8 @@ class axis { // triangle sights a & b ; c - const
     void read_A ();
 
     void read_B ();
+
+    void read_height ();
 
     axis (Ultrasonic &ultra_object1, Ultrasonic &ultra_object2);
 
