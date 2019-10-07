@@ -25,10 +25,8 @@ bool Axis::check_left_half () { // returns true if not inclined to left
 }
 
 int Axis::check_axis_orientary () { // returns  abstract points of incline (positive - to right ; negative - to left)
-  int points = 0;
-  if (sqrt ( height * height + sqr ( L2_dist * cos ( const_alpha ) ) ) - L2_dist) points--;
-  if (sqrt ( height * height + sqr ( L1_dist * cos ( const_alpha ) ) ) - L1_dist) points++;
-  return points;
+  if (sqrt ( height * height + sqr ((baseline - magnet) / 2) return -1;
+  else return 1;
 }
 
 Axis::~axis () {}
