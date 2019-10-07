@@ -21,9 +21,9 @@ namespace st {
     int NT_STATUS;  // NOTADRIVERHANDLE
 
   public:
-    bool critical();
-    int get_status();
-
+    bool NT_critical();
+    size_t get_status();
+    void set_status(size_t _NT_STATUS);
 
   }
   /*
