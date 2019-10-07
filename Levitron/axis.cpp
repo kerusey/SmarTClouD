@@ -16,17 +16,17 @@ Axis::axis(Ultrasonic &ultra_object1, Ultrasonic &ultra_object2) {
 
 bool Axis::check_right_half () { // returns true if not inclined to right
   if (!global_protect() || !st::get_status())
-    return L1_dist <= sqrt(sqr(L1_dist * cos(const_alpha)) + sqr(height))
+    return L1_dist <= sqrt ( height * height + sqr ((baseline - magnet_body_lenght) / 2;
 }
 
 bool Axis::check_left_half () { // returns true if not inclined to left
   if (!global_protect() || !st::get_status())
-    return L2_dist <= sqrt(sqr(L2_dist * cos(const_alpha)) + sqr(height))
+    return L2_dist <= sqrt ( height * height + sqr ((baseline - magnet_body_lenght) / 2;
 }
 
 int Axis::check_axis_orientary () { // returns  abstract points of incline (positive - to right ; negative - to left)
-  if (sqrt ( height * height + sqr ((baseline - magnet) / 2) return -1;
-  else return 1;
+  if (!check_right_half()) return 1;
+  else return -1;
 }
 
 Axis::~axis () {}
