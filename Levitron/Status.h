@@ -7,6 +7,7 @@
 #pragma once
 #include "Ports.h"
 #include "PWM_controller.h"
+#include "Axis.h"
 
 // #define max_potentiometer_current 0.750  ///. KerPatch-4 and older
 
@@ -21,9 +22,12 @@ namespace st {
     int NT_STATUS;  // NOTADRIVERHANDLE
 
   public:
+    void resolve_status();
+    Status();
     bool NT_critical();
     size_t get_status();
     void set_status(size_t _NT_STATUS);
+    ~Status();
 
   }
   /*
