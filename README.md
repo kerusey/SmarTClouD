@@ -1,5 +1,5 @@
 
-# New Ker-Patch-5 is now available
+# New Ker-Patch-6
 This repository contains 2 different ways of change coul magnet force: 
 
 - KerPatch-4. Latest update for potentiometer way of changing coil magnet force.
