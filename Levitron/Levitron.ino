@@ -13,6 +13,10 @@
 
 // globals ***************************************
 
+// setting Status object
+Status core;
+// setting Status object
+
 // setting 4 ultrasonic objects
 
 Ultrasonic ultrasonic_object1 (Trig1, Echo1),
@@ -66,7 +70,7 @@ bool hall_check () { // checks "Hall exeption"
 }
 
 void solve_axis_deviation (axis &x, pwm::coil &_magnet_object1, pwm::coil &_magnet_object2) { // checks deviation of the one axis
-  double deviation = x.check_axis_orientary();
+  size_t deviation = x.check_axis_orientary();
     if (deviation > 0) {  // check deviation of right sight
       if (_magnet_object1.get_percent() < 100) _magnet_object1.boost(); // boost
       if (_magnet_object2.get_percent() >= 1) _magnet_object2.buck(); // buck
@@ -81,7 +85,7 @@ void solve_axis_deviation (axis &x, pwm::coil &_magnet_object1, pwm::coil &_magn
 void correction (axis &x, axis &y) { // this is the main function of control coils
   while (true) {
     // check X axis deviation
-    if (!hall_check () ||  global_protect (magnet_object1, magnet_object2, magnet_object3,  magnet_object4)) {
+    if (!hall_check () ||  !global_protect (magnet_object1, magnet_object2, magnet_object3,  magnet_object4) || core.critical()) {
       solve_axis_deviation (x, magnet_object1, magnet_object2); // solve X axis deviation
       solve_axis_deviation (y, magnet_object3, magnet_object4); // solve Y axis deviation
     }
