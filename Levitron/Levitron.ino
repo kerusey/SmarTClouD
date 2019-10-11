@@ -7,7 +7,7 @@
 
 #include "Ports.h"
 #include "Ultrasonic.h"
-#include "axis.h"
+#include "Axis.h"
 #include "PWM_controller.h"
 #include "Status.h"
 
@@ -69,7 +69,7 @@ bool hall_check () { // checks "Hall exeption"
   return false;
 }
 
-void solve_axis_deviation (axis &x, pwm::coil &_magnet_object1, pwm::coil &_magnet_object2) { // checks deviation of the one axis
+void solve_axis_deviation (ax::Axis &x, pwm::coil &_magnet_object1, pwm::coil &_magnet_object2) { // checks deviation of the one axis
   size_t deviation = x.check_axis_orientary();
     if (deviation > 0) {  // check deviation of right sight
       if (_magnet_object1.get_percent() < 100) _magnet_object1.boost(); // boost
@@ -82,12 +82,12 @@ void solve_axis_deviation (axis &x, pwm::coil &_magnet_object1, pwm::coil &_magn
     }
 }
 
-void correction (axis &x, axis &y) { // this is the main function of control coils
+void correction (ax::Axis &x, ax::Axis &y) { // this is the main function of control coils
   while (true) {
     // check X axis deviation
     if (!hall_check () ||  !global_protect (magnet_object1, magnet_object2, magnet_object3,  magnet_object4) || core.critical()) {
-      solve_axis_deviation (x, magnet_object1, magnet_object2); // solve X axis deviation
-      solve_axis_deviation (y, magnet_object3, magnet_object4); // solve Y axis deviation
+      ax::Axis::solve_axis_deviation (x, magnet_object1, magnet_object2); // solve X axis deviation
+      ax::Axis::solve_axis_deviation (y, magnet_object3, magnet_object4); // solve Y axis deviation
     }
 
     /* now we need to read hall sensor's input */
@@ -103,7 +103,7 @@ void correction (axis &x, axis &y) { // this is the main function of control coi
 } // func
 
 void loop () {
-  axis x (ultrasonic_object1, ultrasonic_object2),
+  Axis x (ultrasonic_object1, ultrasonic_object2),
        y (ultrasonic_object3, ultrasonic_object4);
 
   correction (x, y);
