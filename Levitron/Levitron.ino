@@ -85,7 +85,7 @@ void solve_axis_deviation (ax::Axis &x, pwm::coil &_magnet_object1, pwm::coil &_
 void correction (ax::Axis &x, ax::Axis &y) { // this is the main function of control coils
   while (true) {
     // check X axis deviation
-    if (!hall_check () ||  !global_protect (magnet_object1, magnet_object2, magnet_object3,  magnet_object4) || core.critical()) {
+    if (!hall_check () ||  !global_protect (magnet_object1, magnet_object2, magnet_object3,  magnet_object4) || core.NT_critical()) {
       ax::Axis::solve_axis_deviation (x, magnet_object1, magnet_object2); // solve X axis deviation
       ax::Axis::solve_axis_deviation (y, magnet_object3, magnet_object4); // solve Y axis deviation
     }
