@@ -26,10 +26,10 @@
   #define HallS_A4 A12        // they're not used in this program, but if you need you can uncomment them
 */
 
-#define HallS_D1 22
-#define HallS_D2 23
-#define HallS_D3 24
-#define HallS_D4 25         // 4 hall sensor's ports
+#define HallS_D1 26
+#define HallS_D2 25
+#define HallS_D3 16
+#define HallS_D4 15        // 4 hall sensor's ports
 /*
 #define UD_1 29
 #define INC_1 28
@@ -51,9 +51,9 @@
 
 #define Relay_D 40      // Relay digital port
 
-#define PWM_pin1 1 /*FIXME*/
-#define PWM_pin2 2 /*FIXME*/
-#define PWM_pin3 3 /*FIXME*/
-#define PWM_pin4 4 /*FIXME*/
+#define PWM_pin1 17 
+#define PWM_pin2 18 
+#define PWM_pin3 23 
+#define PWM_pin4 24 
 
 // ports **********************************************
