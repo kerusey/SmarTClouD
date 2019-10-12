@@ -7,28 +7,25 @@
 #define baseline 30  // (CM)
 #define magnet_body_lenght 10  // (CM)
 
-class axis { // triangle sights a & b ; c - const
-  protected:
+namespace ax {
 
-    int Adist;
-    int Bdist;
-    int height;
+size_t height;
+void read_height ();
+
+class Axis {
+  protected:
+    size_t L1dist;
+    size_t L2dist;
     Ultrasonic *ultra_object1;
     Ultrasonic *ultra_object2;
-
   public:
 
-    void read_A ();
-
-    void read_B ();
-
-    void read_height ();
+    void read_L1 ();
+    void read_L2 ();
 
     axis (Ultrasonic &ultra_object1, Ultrasonic &ultra_object2);
 
     double check_axis_orientary ();
-
-    void get_status();
 
     ~axis ();
 
