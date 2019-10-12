@@ -7,6 +7,7 @@
 #pragma once
 #include "Ports.h"
 #include "PWM_controller.h"
+#include "Axis.h"
 
 // #define max_potentiometer_current 0.750  ///. KerPatch-4 and older
 
@@ -17,15 +18,6 @@
 
 namespace st {
 
-  class Status {
-    int NT_STATUS;  // NOTADRIVERHANDLE
-
-  public:
-    bool critical();
-    int get_status();
-
-
-  }
   /*
   bool local_protect (resisto_coil &pot);
   bool global_protect (resisto_coil &pot1, resisto_coil &pot2, resisto_coil &pot3, resisto_coil &pot4);
@@ -33,5 +25,16 @@ namespace st {
   ///. KerPatch-4 and older
 
   bool global_protect (pwm::coil &magnet_object1, pwm::coil &magnet_object2, pwm::coil &magnet_object3, pwm::coil &magnet_object4);
-  //. KerPatch-5 and newer
+  ///. KerPatch-5 and newer
+
+  class Status {
+    int NT_STATUS;  // NOTADRIVERHANDLE
+
+  public:
+    Stratus();
+    bool critical();
+    int get_status();
+    ~Status();
+  }
+
 }

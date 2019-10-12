@@ -14,7 +14,7 @@
 // globals ***************************************
 
 // setting Status object
-Status core;
+Status core;          // allows to check any deviations of incline/height or check hall sensor exeption
 // setting Status object
 
 // setting 4 ultrasonic objects
@@ -62,13 +62,6 @@ void setup () {  // __init__ & set
 
 }
 
-
-bool hall_check () { // checks "Hall exeption"
-  if (digitalRead(HallS_D1) == LOW || digitalRead(HallS_D2) == LOW || digitalRead(HallS_D3) == LOW || digitalRead(HallS_D4) == LOW)
-    return true;
-  return false;
-}
-
 void solve_axis_deviation (ax::Axis &x, pwm::coil &_magnet_object1, pwm::coil &_magnet_object2) { // checks deviation of the one axis
   size_t deviation = x.check_axis_orientary();
     if (deviation > 0) {  // check deviation of right sight
@@ -85,17 +78,18 @@ void solve_axis_deviation (ax::Axis &x, pwm::coil &_magnet_object1, pwm::coil &_
 void correction (ax::Axis &x, ax::Axis &y) { // this is the main function of control coils
   while (true) {
     // check X axis deviation
-    if (!hall_check () ||  !global_protect (magnet_object1, magnet_object2, magnet_object3,  magnet_object4) || !core.NT_critical()) {
+    if (!core.NT_critical()) {
       ax::Axis::solve_axis_deviation (x, magnet_object1, magnet_object2); // solve X axis deviation
       ax::Axis::solve_axis_deviation (y, magnet_object3, magnet_object4); // solve Y axis deviation
     }
 
-    /* now we need to read hall sensor's input */
+    /* now we need to stop the all process until Status will not be critical */
     else  // if hall_check == true
     digitalWrite (Relay_D, HIGH); // coil relay exeption
       do
         delay(3000);
-      while (hall_check() || global_protect (magnet_object1, magnet_object2, magnet_object3,  magnet_object4)); // now we've waited for as much time as user needs to take levitating object away from coils
+        core.resolve_status();
+      while (core.NT_critical()); // now we've waited for as much time as user needs to take levitating object away from coils
       // and we need to set relay down again
     digitalWrite (Relay_D, LOW);
 

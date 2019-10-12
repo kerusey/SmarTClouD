@@ -9,10 +9,10 @@
 
 
 #define default_analog 127
-#define SERIAL1 9600
-#define SERIAL2 12000
-#define SERIAL3 16603
-#define SERIAL4 131312
+#define SERIAL1 9600       /*FIXME*/
+#define SERIAL2 12000      /*FIXME*/
+#define SERIAL3 16603      /*FIXME*/
+#define SERIAL4 131312     /*FIXME*/
 
 namespace pwm {
   class coil {

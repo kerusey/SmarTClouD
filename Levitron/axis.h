@@ -6,6 +6,7 @@
 #define const_alpha 45
 #define baseline 30  // (CM)
 #define magnet_body_lenght 10  // (CM)
+#define critical_height 7 // (CM)
 
 namespace ax {
 
