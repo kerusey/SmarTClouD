@@ -20,7 +20,7 @@
 
 Pwm_coil magnet_object1 (PWM_pin1, SERIAL1),
          magnet_object2 (PWM_pin2, SERIAL2), // for X axis
-  
+
          magnet_object3 (PWM_pin3, SERIAL3),
          magnet_object4 (PWM_pin4, SERIAL4); // for Y axis
 

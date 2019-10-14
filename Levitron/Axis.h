@@ -17,7 +17,7 @@
 // 4 ultrasonic objects
 Ultrasonic ultrasonic_object1 (Trig1, Echo1),
            ultrasonic_object2 (Trig2, Echo2), // these are for x - axis
-    
+
            ultrasonic_object3 (Trig3, Echo3),
            ultrasonic_object4 (Trig4, Echo4); // these - for y - axis
 // 4 ultrasonic objects

@@ -6,10 +6,11 @@ bool local_protect (resisto_coil &pot) {  //  this func used to be a defender fr
   if (voltage/pot.get_pot_resistance() >= max_potentiometer_current || Icurrent >= max_coil_current)
     return true;
 }
+
 bool st::global_protect (resisto_coil &pot1, resisto_coil &pot2, resisto_coil &pot3, resisto_coil &pot4) {
    return (local_protect (pot1) + local_protect (pot2) + local_protect (pot3) + local_protect (pot4));
 } */ ///. KerPatch-4 and older
-          
+
 // now creating a 4 megnetic coil objects, been controlled by PWM controllers; **
 
 bool hall_check () { // checks "Hall exeption"
